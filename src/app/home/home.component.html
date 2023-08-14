@@ -1,0 +1,35 @@
+<div>
+  <section class="flex justify-between px-14 mb-8 items-center" >
+    <h1 class="text-center">Courses List</h1>
+    <button (click)="toggleSortOrder()">
+      Toggle Sort Order ({{ sortOrder === "asc" ? "Ascending" : "Descending" }})
+    </button>
+    <a [routerLink]="['/wishlist']" >My Wishlist</a>
+  </section>
+  <app-skeleton *ngIf="isLoading"></app-skeleton>
+  <section *ngIf="!isLoading">
+    <div
+      *ngFor="
+        let course of coursesData.slice(
+          (currentPage - 1) * itemsPerPage,
+          currentPage * itemsPerPage
+        )
+      "
+    >
+      <app-card-component [Courses]="course"></app-card-component>
+    </div>
+    <div class="flex justify-center items-center space-x-3 mt-5">
+      <button class="text-black font-bold rounded" (click)="prevPage()">
+        <mat-icon aria-hidden="false" fontIcon="navigate_before"></mat-icon>
+      </button>
+      <button
+        class="text-black font-bold rounded"
+        (click)="nextPage()"
+        [disabled]="currentPage * itemsPerPage >= coursesData.length"
+      >
+        <mat-icon aria-hidden="false" fontIcon="navigate_next"></mat-icon>
+      </button>
+    </div>
+    <p class="text-center">Page {{ currentPage }} of {{ getTotalPages() }}</p>
+  </section>
+</div>

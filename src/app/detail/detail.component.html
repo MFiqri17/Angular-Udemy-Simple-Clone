@@ -1,0 +1,73 @@
+<div>
+  <app-skeleton *ngIf="isLoading"></app-skeleton>
+  <div *ngIf="!isLoading" class="bg-gray-800 px-10 py-10">
+    <section class="w-full relative">
+      <div class="w-7/12 text-white">
+        <h1 class="text-3xl">{{ course?.name }}</h1>
+        <h2>{{ course?.description }}</h2>
+        <div class="flex justify-start space-x-3 items-start">
+          <p *ngIf="totalRating" class="text-lg text-yellow-500">
+            {{ totalRating }}
+          </p>
+          <p *ngIf="totalReviewer">
+            <mat-icon
+              *ngFor="let star of getRange(roundedRating)"
+              class="text-yellow-500"
+              aria-hidden="false"
+              fontIcon="star"
+            ></mat-icon>
+            <mat-icon
+              *ngIf="hasHalfStar"
+              aria-hidden="false"
+              fontIcon="star_half"
+              class="text-yellow-500"
+            ></mat-icon>
+          </p>
+          <p *ngIf="totalReviewer" class="text-lg">
+            ({{ totalReviewer }}) reviews
+          </p>
+        </div>
+        <p>Created by : {{ course?.author }}</p>
+        <div *ngIf="course" class="labels pt-4">
+          <span
+            *ngIf="isNewCourse(course.createdAt) && isBestSeller(course)"
+            class="label hot-lesson-label bg-orange-400 p-2"
+            >Hot Lesson</span
+          >
+          <span
+            *ngIf="isBestSeller(course) && !isNewCourse(course.createdAt)"
+            class="label best-seller-label bg-green-500 p-2"
+            >BEST SELLER</span
+          >
+          <span
+            *ngIf="isNewCourse(course.createdAt) && !isBestSeller(course)"
+            class="label new-label bg-blue-500 p-2"
+            >NEW</span
+          >
+        </div>
+      </div>
+    </section>
+    <div class="w-[400px] bg-white absolute end-8 top-6 shadow-2xl">
+      <div class="px-0.5 pt-0.5 flex flex-col space-y-4">
+        <img [src]="course?.image" />
+        <section class="flex flex-col px-4 space-y-1">
+          <h1 class="text-4xl m-0">Rp. {{ course?.price }}</h1>
+          <button
+            (click)="toggleWishlist()"
+            class="bg-purple-500 py-3 text-white text-lg"
+          >
+            {{ isAddedToWishlist ? "Remove from Wishlist" : "Add to Wishlist" }}
+          </button>
+          <p class="text-center pt-3">30-Day Money-Back Guarantee</p>
+          <p class="text-base pt-6 font-bold">This course included:</p>
+          <div class="pt-3">
+            <p>{{ course?.hours }} hours on demand video</p>
+            <p>{{ course?.excercise }} excercise</p>
+            <p>{{ course?.downloadable }} downloadable resources</p>
+            <p>{{ course?.article }} articles</p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>

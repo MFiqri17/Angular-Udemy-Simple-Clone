@@ -1,0 +1,9 @@
+<!-- wishlist.component.html -->
+<div>
+  <h2>Your Wishlist</h2>
+  <ul>
+    <li *ngFor="let item of wishlist">
+      <app-card-component [Courses]="item"></app-card-component>
+    </li>
+  </ul>
+</div>

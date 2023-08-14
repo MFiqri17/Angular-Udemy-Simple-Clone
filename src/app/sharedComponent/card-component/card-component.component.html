@@ -1,0 +1,48 @@
+<a [routerLink]="['/course', Courses.id]">
+  <mat-card>
+    <section
+      class="flex px-10 w-full flex-row justify-center space-x-7 items-start mt-7"
+    >
+      <div class="w-[700px] h-full">
+        <img mat-card-image [src]="Courses.image" />
+      </div>
+      <div class="w-full">
+        <mat-card-content>
+          <section class="flex justify-between items-start">
+            <div class="flex flex-col space-y-2">
+              <h2>{{ Courses.name }}</h2>
+              <h4>{{ Courses.description }}</h4>
+              <p>{{ Courses.author }}</p>
+              <div class="flex justify-start space-x-3 items-start">
+                <p *ngIf="totalRating" class="text-lg text-yellow-500">
+                  {{ totalRating }}
+                </p>
+                <p *ngIf="totalReviewer">
+                  <mat-icon
+                    *ngFor="let star of getRange(roundedRating)"
+                    class="text-yellow-500"
+                    aria-hidden="false"
+                    fontIcon="star"
+                  ></mat-icon>
+                  <mat-icon
+                    *ngIf="hasHalfStar"
+                    aria-hidden="false"
+                    fontIcon="star_half"
+                    class="text-yellow-500"
+                  ></mat-icon>
+                </p>
+                <p *ngIf="totalReviewer" class="text-lg">
+                  ({{ totalReviewer }})
+                </p>
+              </div>
+              <p *ngIf="!totalReviewer">No Review</p>
+            </div>
+            <div class="w-full">
+              <h2 class="text-xl text-right">Rp. {{ Courses.price }}</h2>
+            </div>
+          </section>
+        </mat-card-content>
+      </div>
+    </section>
+  </mat-card>
+</a>
